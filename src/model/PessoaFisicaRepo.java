@@ -4,6 +4,10 @@
  */
 package model;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 /**
@@ -53,4 +57,15 @@ public class PessoaFisicaRepo {
         return pessoas;
     }
     
+    public void persistir(String nomeArquivo) throws Exception{
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(nomeArquivo));
+        out.writeObject(pessoas);
+        out.close();
+    }
+    
+    public void recuperar(String nomeArquivo) throws Exception{
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream(nomeArquivo));
+        pessoas = (ArrayList<PessoaFisica>) in.readObject();
+        in.close();
+    }
 }
