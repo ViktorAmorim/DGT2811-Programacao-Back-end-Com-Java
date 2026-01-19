@@ -5,6 +5,7 @@
 package cadastropoo;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 import model.PessoaFisica;
 import model.PessoaFisicaRepo;
 import model.PessoaJuridica;
@@ -66,6 +67,228 @@ public class CadastroPOO {
             listaPessoaJuridica.get(i).exibir();
         }
         
+        
+        
+        Scanner scan = new Scanner(System.in);
+        int option = -1;
+        
+        PessoaFisicaRepo repoFisica = new PessoaFisicaRepo();
+        PessoaJuridicaRepo repoJuridica = new PessoaJuridicaRepo();
+        
+        while(option != 0){
+            
+            // menus fixos para guia.
+            System.out.println("=========================");
+            System.out.println("1 - Incluir Pessoa");
+            System.out.println("2 - Alterar Pessoa");
+            System.out.println("3 - Excluir Pessoa");
+            System.out.println("4 - Exibir pelo ID");
+            System.out.println("5 - Exibir Todos");
+            System.out.println("6 - Salvar Dados");
+            System.out.println("7 - Recuperar Dados");
+            System.out.println("0 - Finalizar Programa");
+            System.out.println("========================");
+            System.out.print("Escolhar uma opção: ");
+            
+            option = scan.nextInt();
+            
+         
+            // if das opções do menu acima.
+            if(option == 1){
+                System.out.println("Tipo (F - Fisica / J - Juridica): ");
+                String tipo = scan.next().toUpperCase();
+                
+                if(tipo.equals("F")){
+                    System.out.println("Cadastro de pessoa Fisica selecionado.");
+                    
+                    System.out.print("ID: ");
+                    int id = scan.nextInt();
+                    
+                    System.out.print("Nome: ");
+                    scan.nextLine();
+                    String nome = scan.nextLine();
+                    
+                    System.out.print("CPF: ");
+                    String cpf = scan.next();
+                    
+                    System.out.print("Idade: ");
+                    int idade = scan.nextInt();
+                    
+                    PessoaFisica pFisica = new PessoaFisica(id, nome, cpf, idade);
+                    repoFisica.inserir(pFisica);
+                    
+                    System.out.println("Pessoa Física cadastrada com sucesso.");
+                    
+                } else if(tipo.equals("J")){
+                    System.out.println("Cadastro de pessoa Juridica selecionado.");
+                    
+                    System.out.print("ID: ");
+                    int id = scan.nextInt();
+                    
+                    System.out.print("Nome: ");
+                    scan.nextLine();
+                    String nome = scan.nextLine();
+                    
+                    System.out.print("CNPJ: ");
+                    String cnpj = scan.next();
+                    
+                    PessoaJuridica pJuridica = new PessoaJuridica(id, nome, cnpj);
+                    repoJuridica.inserir(pJuridica);
+                    
+                    System.out.println("Pessoa Juridica cadastrada com sucesso.");
+                    
+                } else {
+                    System.out.println("Selecione uma opção válida.");
+                }
+                
+                
+            
+            } else if(option == 2){
+                System.out.println("Tipo (F - Fisica / J - Juridica): ");
+                String tipo = scan.next().toUpperCase();
+                
+                System.out.print("ID: ");
+                int id = scan.nextInt();
+                
+                if(tipo.equals("F")){
+                    System.out.println("Alterar pessoa Fisica");
+                    
+                    PessoaFisica pFisica = repoFisica.obter(id);
+                    if(pFisica != null){
+                        System.out.println("Dados atuais: ");
+                        pFisica.exibir();
+                        
+                        System.out.println("Informe os novos dados: ");
+                        System.out.print("Nome: ");
+                        scan.nextLine();
+                        String nome = scan.nextLine();
+                        
+                        System.out.print("CPF: ");
+                        String cpf = scan.next();
+                        
+                        System.out.print("Idade: ");
+                        int idade = scan.nextInt();
+                        
+                        pFisica.setNome(nome);
+                        pFisica.setCpf(cpf);
+                        pFisica.setIdade(idade);
+                        
+                        System.out.println("Pessoa fisica alterada com sucesso.");
+                    } else{
+                        System.out.println("Pessoa fisica não encontrada.");
+                    }
+                    
+                    
+
+                } else if(tipo.equals("J")){
+                    System.out.println("Alterar pessoa Juridica.");
+                    
+                    PessoaJuridica pJuridica = repoJuridica.obter(id);
+                    if(pJuridica != null){
+                        System.out.println("Dados atuais: ");
+                        pJuridica.exibir();
+                        
+                        System.out.println("Informe os novos dados: ");
+                        
+                        System.out.print("Nome: ");
+                        scan.nextLine();
+                        String nome = scan.nextLine();
+                        
+                        System.out.print("CNPJ: ");
+                        String cnpj = scan.next();
+                        
+                        pJuridica.setNome(nome);
+                        pJuridica.setCnpj(cnpj);
+                        
+                        System.out.println("Pessoa juridica alterada com sucesso.");
+                    } else{
+                        System.out.println("Pessoa Juridica não encontrada.");
+                    }
+                    
+                
+                } else{
+                    System.out.println("Selecione uma opção valida.");
+                }
+            
+            } else if (option == 3){
+                System.out.println("Tipo (F - Fisica / J - Juridica): ");
+                String tipo = scan.next().toUpperCase();
+                
+                System.out.print("ID: ");
+                int id = scan.nextInt();
+                
+                if(tipo.equals("F")){
+                    repoFisica.excluir(id);
+                    System.out.println("Pessoa Fisica excluida com sucesso.");
+                } else if(tipo.equals("J")){
+                    repoJuridica.excluir(id);
+                    System.out.println("Pessoa Juridica excluida com sucesso.");
+                } else{
+                    System.out.println("Tipo invalido.");
+                }
+            
+            } else if(option == 4){
+                System.out.println("Tipo (F - Fisica / J - Juridica): ");
+                String tipo = scan.next().toUpperCase();
+                
+                System.out.print("ID: ");
+                int id = scan.nextInt();
+                
+                if(tipo.equals("F")){
+                    PessoaFisica pFisica = repoFisica.obter(id);
+                    if(pFisica != null){
+                        pFisica.exibir();
+                    } else{
+                        System.out.println("Pessoa Fisica não encontrada.");
+                    }
+                } else if(tipo.equals("J")){
+                    PessoaJuridica pJuridica = repoJuridica.obter(id);
+                    if(pJuridica != null){
+                        pJuridica.exibir();
+                    } else{
+                        System.out.println("Pessoa Juridica não encontrada.");
+                    }
+                } else{
+                    System.out.println("Tipo invalido.");
+                }
+            
+            } else if(option == 5){
+                System.out.println("Tipo (F Física / J - Juridica): ");
+                String tipo = scan.next().toUpperCase();
+                
+                if(tipo.equals("F")){
+                    ArrayList<PessoaFisica> listaFisica = repoFisica.obterTodos();
+                    if(listaFisica.isEmpty()){
+                        System.out.println("Nenhnuma pessoa fisica cadastrada.");
+                    } else{
+                        for(int i = 0; i < listaFisica.size(); i++){
+                            listaFisica.get(i).exibir();
+                        }
+                    }
+                } else if(tipo.equals("J")){
+                    ArrayList<PessoaJuridica> listaJuridica = repoJuridica.obterTodos();
+                    if(listaJuridica.isEmpty()){
+                        System.out.println("Nenhuma pessoa Juridica cadastrada.");
+                    } else{
+                        for(int i = 0; i < listaJuridica.size(); i++){
+                            listaJuridica.get(i).exibir();
+                        }
+                    }
+                } else{
+                    System.out.println("Tipo invalido.");
+                }
+            
+            } else if(option == 6){
+            
+            } else if(option == 7){
+            
+            } else if(option == 0){
+                System.out.println("Programa Finalizado.");
+            } else {
+                System.out.println("Opção invalida.");
+            }
+        }
+        scan.close();
     }
     
 }
