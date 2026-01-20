@@ -279,9 +279,31 @@ public class CadastroPOO {
                 }
             
             } else if(option == 6){
+                System.out.print("Informe o prefixo dos arquivos para salvar: ");
+                String prefixo = scan.next();
+                
+                try{
+                    repoFisica.persistir(prefixo + ".fisica.bin");
+                    repoJuridica.persistir(prefixo + ".juridica.bin");
+                    
+                    System.out.println("Dados salvos com sucesso.");
+                } catch(Exception e){
+                    System.out.println("Erro ao salvar os dados.");
+                }
             
             } else if(option == 7){
-            
+                System.out.print("Informe o prefixo dos arquivos para recuperar: ");
+                scan.nextLine();
+                String prefixo = scan.nextLine();
+                
+                try{
+                repoFisica.recuperar(prefixo + ".fisica.bin");
+                repoJuridica.recuperar(prefixo + ".juridica.bin");
+                
+                System.out.println("Dados recuperados com sucesso.");
+                } catch(Exception e){
+                    System.out.println("Erro ao recuperar.");
+                }
             } else if(option == 0){
                 System.out.println("Programa Finalizado.");
             } else {
